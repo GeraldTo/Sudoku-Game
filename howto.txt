@@ -1,0 +1,13 @@
+                        Sudoku is structured with a 3x3 grid of squares with each 
+                    square being a 3x3 grid of spaces making it a 9x9 grid of spaces. 
+                    Initially there are some spaces that are filled in with numbers 1-9. 
+                    The purpose of the games is to fill in each square with numbers. 
+                    However it must also follow these rules:
+                        1) Each number must be between 1-9
+                        2) Each row must have no repeat numbers
+                        3) Each column must have no repeat numbers
+                        4) Each square must have no repeat numbers
+
+                        When a number is inputed and it violates a sudoku rule the 
+                    square becomes red and will stay red until its changed. Exiting 
+                    and saving while there are red squares will not save them.
