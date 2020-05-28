@@ -32,7 +32,7 @@ def printsudo(puz): # loops through board and prints board
         for j in range(9):
             if(j%3==0 and j>0):
                 print('|',end=' ') # prints a line for boarder
-            if(puz[i][j]!=0 or puz[i][j]!=0):
+            if(puz[i][j]!=0):
                 print(puz[i][j],end=' ')
             else:
                 print(' ',end=' ')
@@ -86,7 +86,7 @@ def backtrack(puz,r,c): # generates a completed board by looping through every p
         return False
 
 def create_spaces(puz): # fills a board with white space and makes sure theres only one valid solution
-    diff = 20 # runs removal 20 times
+    diff = 20
     while(diff>0): 
         i = random.randint(0,8)  # grabs a random position with random
         j = random.randint(0,8)
@@ -106,30 +106,28 @@ def count_spaces(puz):  # counts spaces by seeing which position is 0
                 spaces+=1
     return spaces
 
-def create_board(diff): # generates a complted board to be used
-    puz = []
-    init(puz)
-    fill_diag(puz)
-    if backtrack(puz,0,0): # backtracks with initial diagonal board
-        create_spaces(puz)  
-        spaces = count_spaces(puz)
-        global sudo
-        if diff == 1:   # reloops until its in desired range
-            if(spaces>36 and spaces <=42): # 42 48
-                sudo = puz  # completes board
-            else:
-                create_board(diff)
-        else:
-            if diff == 2:
-                if(spaces>52 and spaces <=58):
-                    sudo = puz # completes board
+def getBoard(diff): # return function of a fully generated board
+    sudo = []
+    def create_board(diff): # generates a complted board to be used
+        puz = []
+        init(puz)
+        fill_diag(puz)
+        if backtrack(puz,0,0): # backtracks with initial diagonal board
+            create_spaces(puz)  
+            spaces = count_spaces(puz)
+            nonlocal sudo
+            if diff == 1:   # reloops until its in desired range
+                if(spaces>36 and spaces <=42): # 42 48
+                    sudo = puz  # completes board
                 else:
                     create_board(diff)
-    else:   # reloops if backtracking fails on intitial board
-        create_board(diff)
-
-def getBoard(diff): # return function of a fully generated board
+            else:
+                if diff == 2:
+                    if(spaces>52 and spaces <=58):
+                        sudo = puz # completes board
+                    else:
+                        create_board(diff)
+        else:   # reloops if backtracking fails on intitial board
+            create_board(diff)
     create_board(diff)
-    global sudo
     return sudo
-
